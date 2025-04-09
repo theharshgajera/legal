@@ -1,12 +1,19 @@
-# legal_advisor_gemini_direct_key.py
+# legal_advisor_free.py
 import streamlit as st
 import google.generativeai as genai
+import os
 
-# --- Gemini API Configuration (INSECURE - DO NOT DO THIS FOR PRODUCTION) ---
-GEMINI_API_KEY = "AIzaSyCsmckjASuCwZ8R22I5KwiK1IANJEAEJzg"  # Replace with your actual API key
+# --- Gemini API Configuration ---
+# Get your API key from Streamlit Secrets
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+
+if not GEMINI_API_KEY:
+    st.error("Please set the GEMINI_API_KEY in Streamlit Secrets.")
+    st.stop()
 
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-2.0-flash')
+model = genai.GenerativeModel('gemini-2.0-flash') # Or 'gemini-2.5-pro-exp'
+# ... (rest of your code) ...
 
 # --- Function to Interact with Gemini API for Legal Advice ---
 def get_legal_advice(query):
